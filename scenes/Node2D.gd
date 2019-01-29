@@ -22,6 +22,7 @@ func _set_tiles():
 	
 		if get_node("ray_below").is_colliding():
 			var below = get_node("ray_below").get_collider()
+			
 		
 		get_node("ray_below").free()
 		
@@ -40,6 +41,8 @@ func _set_tiles():
 	    	
 		
 		get_node("ray_right").free()
+		
+		init = true
 		
 	
 func _set_piece(o):
