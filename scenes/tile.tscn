@@ -1,6 +1,6 @@
 [gd_scene load_steps=4 format=2]
 
-[ext_resource path="res://Node2D.gd" type="Script" id=1]
+[ext_resource path="res://scenes/Node2D.gd" type="Script" id=1]
 [ext_resource path="res://sprites/temp_tile.png" type="Texture" id=2]
 
 [sub_resource type="RectangleShape2D" id=1]
@@ -8,9 +8,8 @@
 custom_solver_bias = 0.0
 extents = Vector2( 17.6792, 55.273 )
 
-[node name="Area2d" type="Area2D" index="0"]
+[node name="Area2d" type="Area2D"]
 
-editor/display_folded = true
 position = Vector2( 105.246, 80.9632 )
 input_pickable = true
 gravity_vec = Vector2( 0, 1 )
@@ -36,38 +35,42 @@ _sections_unfolded = [ "Transform" ]
 
 [node name="ray_below" type="RayCast2D" parent="." index="2"]
 
-position = Vector2( 21.9766, 60.4969 )
-enabled = false
-exclude_parent = true
+position = Vector2( 22.4554, 73.2779 )
+scale = Vector2( 1, 0.338955 )
+enabled = true
+exclude_parent = false
 cast_to = Vector2( 0, 50 )
 collision_mask = 1
 
 [node name="ray_left" type="RayCast2D" parent="." index="3"]
 
-position = Vector2( 0.397209, 10.7248 )
+position = Vector2( -41.5098, 9.65154 )
 rotation = 1.5708
-enabled = false
-exclude_parent = true
+scale = Vector2( 1, 0.401485 )
+enabled = true
+exclude_parent = false
 cast_to = Vector2( 0, 50 )
 collision_mask = 1
 _sections_unfolded = [ "Transform" ]
 
 [node name="ray_above" type="RayCast2D" parent="." index="4"]
 
-position = Vector2( 20.2579, -15.8886 )
+position = Vector2( 20.9019, -56.7068 )
 rotation = 3.14159
-enabled = false
-exclude_parent = true
+scale = Vector2( 1, 0.29016 )
+enabled = true
+exclude_parent = false
 cast_to = Vector2( 0, 50 )
 collision_mask = 1
 _sections_unfolded = [ "Transform" ]
 
 [node name="ray_right" type="RayCast2D" parent="." index="5"]
 
-position = Vector2( 50.049, 5.9582 )
+position = Vector2( 89.471, 8.00216 )
 rotation = 4.71239
-enabled = false
-exclude_parent = true
+scale = Vector2( 1, 0.370289 )
+enabled = true
+exclude_parent = false
 cast_to = Vector2( 0, 50 )
 collision_mask = 1
 _sections_unfolded = [ "Transform" ]
