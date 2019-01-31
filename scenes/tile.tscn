@@ -25,18 +25,19 @@ _sections_unfolded = [ "Collision" ]
 
 position = Vector2( 24.0082, 8.06457 )
 texture = ExtResource( 2 )
+_sections_unfolded = [ "Offset" ]
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." index="1"]
 
-position = Vector2( 23.734, 8.08271 )
-scale = Vector2( 3.59487, 1.14857 )
+position = Vector2( 24.018, 12.6381 )
+scale = Vector2( 6.1757, 2.0094 )
 shape = SubResource( 1 )
 _sections_unfolded = [ "Transform" ]
 
 [node name="ray_below" type="RayCast2D" parent="." index="2"]
 
-position = Vector2( 22.4554, 73.2779 )
-scale = Vector2( 1, 0.338955 )
+position = Vector2( 22.5753, 137.246 )
+scale = Vector2( 1, 0.635411 )
 enabled = true
 exclude_parent = false
 cast_to = Vector2( 0, 50 )
@@ -44,9 +45,9 @@ collision_mask = 1
 
 [node name="ray_left" type="RayCast2D" parent="." index="3"]
 
-position = Vector2( -41.5098, 9.65154 )
+position = Vector2( -105.437, 7.96076 )
 rotation = 1.5708
-scale = Vector2( 1, 0.401485 )
+scale = Vector2( 1, 1.0232 )
 enabled = true
 exclude_parent = false
 cast_to = Vector2( 0, 50 )
@@ -55,7 +56,7 @@ _sections_unfolded = [ "Transform" ]
 
 [node name="ray_above" type="RayCast2D" parent="." index="4"]
 
-position = Vector2( 20.9019, -56.7068 )
+position = Vector2( 20.5784, -124.972 )
 rotation = 3.14159
 scale = Vector2( 1, 0.29016 )
 enabled = true
@@ -66,7 +67,7 @@ _sections_unfolded = [ "Transform" ]
 
 [node name="ray_right" type="RayCast2D" parent="." index="5"]
 
-position = Vector2( 89.471, 8.00216 )
+position = Vector2( 157.736, 4.44329 )
 rotation = 4.71239
 scale = Vector2( 1, 0.370289 )
 enabled = true

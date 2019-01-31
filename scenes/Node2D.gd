@@ -22,6 +22,7 @@ func _set_tiles():
 	
 		if get_node("ray_below").is_colliding():
 			var below = get_node("ray_below").get_collider()
+			print(below)
 			
 		
 		get_node("ray_below").free()
@@ -54,6 +55,8 @@ func _highlight():
 func _unhighlight():
 	get_node("Sprite").set_texture(load("res://sprites/temp_tile.png"))
 
+func _get_below():
+	return below
 
 func _ready():
 	pass
