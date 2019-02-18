@@ -27,8 +27,8 @@ _sections_unfolded = [ "Offset" ]
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." index="1"]
 
-position = Vector2( 16.7384, 16.4089 )
-scale = Vector2( 10.9306, 10.9736 )
+position = Vector2( 17.9822, 10.5936 )
+scale = Vector2( 7.98365, 7.80823 )
 shape = SubResource( 1 )
 
 [connection signal="mouse_entered" from="." to="." method="_on_Piece_mouse_entered"]

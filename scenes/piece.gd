@@ -1,9 +1,11 @@
 extends Area2D
 
 var mouse_inside = false
-var placed = false
+var placed = true
 var type = 0
 var tile
+var team = 0
+
 
 func _ready():
 	# Called when the node is added to the scene for the first time.
@@ -12,23 +14,35 @@ func _ready():
 
 
 func _process(delta):
-	if typeof(tile) != 0:
-		_show_rmovement(tile, "Below")
-		
-	if mouse_inside and Input.is_action_pressed("ui_left_click"):
-		if placed:
-			_show_movement()
+	_move()
+
+func _move():
+#	if !placed or get_tree("game_control").holding:
+		if typeof(tile) != 0:
+			_show_rmovement(tile, "Below")
+				
+		if mouse_inside and Input.is_action_just_pressed("ui_left_click"):
+			placed = false
 			
-		placed = false
-		position = get_global_mouse_position()
-	elif !placed and !Input.is_action_pressed("ui_left_click"):
-		var temp_ray = get_overlapping_areas()
-		if temp_ray.size() > 0:
-			position = temp_ray[0].position
-			tile = temp_ray[0]
-			placed = true
-	else:
+		if !placed:
+			position = get_global_mouse_position()
+			
+			if !Input.is_action_pressed("ui_left_click"):
+				placed = true
+				var temp_ray = get_overlapping_areas()
+				if temp_ray.size() > 0:
+					print(temp_ray[0].filename)
+					if temp_ray[0].filename == "res://scenes/tile.tscn":
+						position = temp_ray[0].position
+						tile = temp_ray[0]
+				
+			
+				
+func _place():
+	
+	
 		placed = true
+				
 	
 func _show_movement():
 	
