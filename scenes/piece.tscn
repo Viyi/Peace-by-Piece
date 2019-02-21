@@ -6,9 +6,9 @@
 [sub_resource type="RectangleShape2D" id=1]
 
 custom_solver_bias = 0.0
-extents = Vector2( 10, 9.77193 )
+extents = Vector2( 10, 10 )
 
-[node name="Piece" type="Area2D"]
+[node name="Piece" type="Area2D" index="0"]
 
 input_pickable = true
 gravity_vec = Vector2( 0, 1 )
@@ -21,15 +21,17 @@ script = ExtResource( 1 )
 
 [node name="Sprite" type="Sprite" parent="." index="0"]
 
+position = Vector2( 2.99365, 3.5924 )
 texture = ExtResource( 2 )
-offset = Vector2( 16, 16 )
-_sections_unfolded = [ "Offset" ]
+offset = Vector2( 22, 4 )
+_sections_unfolded = [ "Offset", "Region" ]
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." index="1"]
 
-position = Vector2( 17.9822, 10.5936 )
+position = Vector2( 28.7594, 5.20495 )
 scale = Vector2( 7.98365, 7.80823 )
 shape = SubResource( 1 )
+_sections_unfolded = [ "Transform" ]
 
 [connection signal="mouse_entered" from="." to="." method="_on_Piece_mouse_entered"]
 
