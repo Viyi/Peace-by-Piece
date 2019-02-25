@@ -1,5 +1,8 @@
 extends Node
 
+# That's a Two Liner
+
+
 # loading tiles for deployment
 
 var holding
@@ -17,20 +20,15 @@ func _ready():
 			node.translate(pos)
 			
 			add_child(node)
-			
-	
-	
-	var n = preload("res://scenes/piece.tscn").instance()
-	n.translate(pos)
-	add_child(n)
-	var nu = preload("res://scenes/p-borg.tscn").instance()
-	pos.x += 256
-	nu.translate(pos)
-	add_child(nu)
-	var no = preload("res://scenes/mattress.tscn").instance()
-	pos.x += 256
-	no.translate(pos)
-	add_child(no)
+	var pieces = ["king","pillow","mattress","p-borg"]
+	pos = Vector2(256,512)
+	var spawn = preload("res://scenes/spawner.tscn")
+	for a in range(pieces.size()):
+		var s = spawn.instance()
+		pos.y += 256
+		s.translate(pos)
+		add_child(s)
+		s._set_piece(pieces[a])
 	
 	# get_node(".").add_child(tile)
 

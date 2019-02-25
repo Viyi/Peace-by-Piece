@@ -20,14 +20,14 @@ func _process(delta):
 
 func _move():
 
-		# This is the meat of the piece, i'll try to explain it well
+		
 		
 		# If mouse is just clicked and it's inside the piece then we start to move it
 		if mouse_inside and Input.is_action_just_pressed("ui_left_click"):
 			selected = true
 			placed = false
 			z_index = 2
-			
+		
 		# Now that we are moving the piece we set the position to our mouse and wait until release
 		if !placed:
 			position = get_global_mouse_position()
@@ -120,6 +120,7 @@ func is_nil(var v):
 
 # A signal to check if our piece has been entered
 func _on_Piece_mouse_entered():
+	
 	mouse_inside = true
 
 func _on_Piece_mouse_exited():
