@@ -23,10 +23,14 @@ func _ready():
 	var n = preload("res://scenes/piece.tscn").instance()
 	n.translate(pos)
 	add_child(n)
-	var nu = preload("res://scenes/piece.tscn").instance()
+	var nu = preload("res://scenes/p-borg.tscn").instance()
 	pos.x += 256
 	nu.translate(pos)
 	add_child(nu)
+	var no = preload("res://scenes/mattress.tscn").instance()
+	pos.x += 256
+	no.translate(pos)
+	add_child(no)
 	
 	# get_node(".").add_child(tile)
 
