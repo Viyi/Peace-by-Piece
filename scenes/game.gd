@@ -2,7 +2,7 @@ extends Node
 
 # loading tiles for deployment
 
-
+var turn = 1
 
 func _ready():
 	set_process(true)
@@ -19,6 +19,14 @@ func _ready():
 			add_child(node)
 	
 	# get_node(".").add_child(tile)
+func _changeTurns():
+	if turn == 1:
+		turn = 2
+	elif turn == 2:
+		turn = 1
+
+func _getActivePlayer():
+	return turn
 
 #func _process(delta):
 #	# Called every frame. Delta is time since last frame.
