@@ -1,6 +1,6 @@
 [gd_scene load_steps=4 format=2]
 
-[ext_resource path="res://scenes/piece.gd" type="Script" id=1]
+[ext_resource path="res://scenes/king_cuddle_bear.gd" type="Script" id=1]
 [ext_resource path="res://sprites/kingcuddlebear-piece.png" type="Texture" id=2]
 
 [sub_resource type="RectangleShape2D" id=1]
@@ -8,7 +8,7 @@
 custom_solver_bias = 0.0
 extents = Vector2( 10, 10 )
 
-[node name="Piece" type="Area2D"]
+[node name="King_Cuddle_Bear" type="Area2D"]
 
 input_pickable = true
 gravity_vec = Vector2( 0, 1 )
@@ -24,7 +24,7 @@ script = ExtResource( 1 )
 position = Vector2( 2.99365, 3.5924 )
 texture = ExtResource( 2 )
 offset = Vector2( 22, 4 )
-_sections_unfolded = [ "Offset", "Region", "Z Index" ]
+_sections_unfolded = [ "Offset", "Region" ]
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." index="1"]
 
