@@ -12,46 +12,51 @@ onready var p_borg = preload("res://scenes/p-borg.tscn")
 var mouse_inside = false
 var piece = ""
 var obj_piece
-
+var team = 0
 
 
 
 func _ready():
-	# Called when the node is added to the scene for the first time.
-	# Initialization here
+	print()
 	pass
 
 func _process(delta):
 	# Damnit Chase. 
+	_set_piece(piece)
+		
 	_detect()
 	
 func _set_piece(var name):
 	piece = name
 	
+	if get_parent().turn == team:
+		pass
+	
+	team = get_parent().turn
 	match(piece):
 		
 		"king":
-			get_node("Sprite").set_texture(load("res://sprites/kingcuddlebear-piece.png"))
+			get_node("Sprite").set_texture(load("res://sprites/" + str(team) + "/kingcuddlebear-piece.png"))
 			obj_piece = king
 		"pillow":
-			get_node("Sprite").set_texture(load("res://sprites/pillow.png"))
+			get_node("Sprite").set_texture(load("res://sprites/" + str(team) + "/pillow.png"))
 			obj_piece = pillow
 		"mattress":
-			get_node("Sprite").set_texture(load("res://sprites/mattress.png"))
+			get_node("Sprite").set_texture(load("res://sprites/" + str(team) + "/mattress.png"))
 			obj_piece = mattress
 		"p-borg":
-			get_node("Sprite").set_texture(load("res://sprites/pillowborg.png"))
+			get_node("Sprite").set_texture(load("res://sprites/" + str(team) + "/pillowborg.png"))
 			obj_piece = p_borg
 
 func _detect():
 	if mouse_inside and Input.is_action_just_pressed("ui_left_click"):
 		var two_lines = position
 		var chase = obj_piece.instance()
-		
-		print(chase.position)
 		two_lines.x += 256
 		chase.translate(two_lines)
-		get_tree().get_root().add_child(chase)
+		chase.team = get_parent()._get_player()
+		get_parent().add_child(chase)
+		chase.get_node("Sprite").set_texture(load($Sprite.texture.resource_path))
 		
 
 

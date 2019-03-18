@@ -3,10 +3,10 @@ extends Node
 # That's a Two Liner
 
 
-var turn = 1
+var turn = 2
 # loading tiles for deployment
 
-var holding
+var teams = 2
 
 func _ready():
 	set_process(true)
@@ -32,14 +32,18 @@ func _ready():
 		s._set_piece(pieces[a])
 	
 	# get_node(".").add_child(tile)
-func _changeTurns():
-	if turn == 1:
-		turn = 2
-	elif turn == 2:
+func _change_turns():
+	turn += 1
+	
+	if turn > teams:
 		turn = 1
+	
+		
 
-func _getActivePlayer():
+
+func _get_player():
 	return turn
+
 
 #func _process(delta):
 #	# Called every frame. Delta is time since last frame.

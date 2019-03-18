@@ -6,7 +6,7 @@ var selected = false
 var placed = true
 var type = "King"
 var tile
-var team = 1
+var team = 0
 var moves = []
 var attacks = []
 func _ready():
@@ -16,17 +16,19 @@ func _ready():
 
 
 func _process(delta):
-	_move()
+	if get_parent().turn == team:
+		_move()
 
 func _move():
-
-		
 		
 		# If mouse is just clicked and it's inside the piece then we start to move it
 		if mouse_inside and Input.is_action_just_pressed("ui_left_click"):
 			selected = true
 			placed = false
 			z_index = 2
+			if !is_nil(tile):
+				_set_moves()
+				
 		
 		# Now that we are moving the piece we set the position to our mouse and wait until release
 		if !placed:
@@ -50,6 +52,8 @@ func _move():
 								if tile != temp_tile:
 									_unshow_movement()
 									selected = false
+							get_parent()._change_turns()
+							print("tile set")
 							tile = temp_tile
 							
 							if !is_nil(tile.piece):
@@ -58,7 +62,6 @@ func _move():
 						# Set position to the tile, unhighlight the tiles, and reset the moves array
 						position = tile.position
 						
-						_set_moves()
 						z_index = 0
 						
 		# This is basically used to show the movement of the piece without holding click

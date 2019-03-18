@@ -1,7 +1,11 @@
 [gd_scene load_steps=4 format=2]
 
 [ext_resource path="res://scenes/king_cuddle_bear.gd" type="Script" id=1]
-[ext_resource path="res://sprites/kingcuddlebear-piece.png" type="Texture" id=2]
+[ext_resource path="res://sprites/1/kingcuddlebear-piece.png" type="Texture" id=2]
+
+
+
+
 
 [sub_resource type="RectangleShape2D" id=1]
 

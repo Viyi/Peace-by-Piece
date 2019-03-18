@@ -18,11 +18,9 @@ var piece
 func _set_tiles():
 	
 	if !init:
-		
 		if get_node("ray_below").is_colliding():
 			below = get_node("ray_below").get_collider()
-			print(below)
-			
+			print(below)	
 		
 		get_node("ray_below").free()
 		

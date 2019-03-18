@@ -4,76 +4,53 @@
 [ext_resource path="res://sprites/brick_tile.png" type="Texture" id=2]
 
 [sub_resource type="RectangleShape2D" id=1]
+extents = Vector2( 17.5377, 54.9775 )
 
-custom_solver_bias = 0.0
-extents = Vector2( 17.6792, 55.273 )
-
-[node name="Tile" type="Area2D"]
-
+[node name="Tile" type="Area2D" groups=[
+"tile",
+]]
 position = Vector2( 105.246, 80.9632 )
-input_pickable = true
-gravity_vec = Vector2( 0, 1 )
 gravity = 0.0
-linear_damp = 0.1
-angular_damp = 1.0
-audio_bus_override = false
-audio_bus_name = "Master"
 script = ExtResource( 1 )
-_sections_unfolded = [ "Collision" ]
 
-[node name="Sprite" type="Sprite" parent="." index="0"]
-
+[node name="Sprite" type="Sprite" parent="."]
 position = Vector2( 24.0082, 8.06457 )
 texture = ExtResource( 2 )
-_sections_unfolded = [ "Offset" ]
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="." index="1"]
-
-position = Vector2( 28.5305, 9.93061 )
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2( 24.855, 11.4007 )
 scale = Vector2( 6, 2 )
 shape = SubResource( 1 )
-_sections_unfolded = [ "Transform" ]
+one_way_collision_margin = 128.0
 
-[node name="ray_below" type="RayCast2D" parent="." index="2"]
-
+[node name="ray_below" type="RayCast2D" parent="."]
 position = Vector2( 22.5753, 137.246 )
 scale = Vector2( 1, 0.635411 )
 enabled = true
 exclude_parent = false
-cast_to = Vector2( 0, 50 )
-collision_mask = 1
+collide_with_areas = true
 
-[node name="ray_left" type="RayCast2D" parent="." index="3"]
-
-position = Vector2( -105.437, 7.96076 )
+[node name="ray_left" type="RayCast2D" parent="."]
+position = Vector2( -117.934, 5.02036 )
 rotation = 1.5708
 scale = Vector2( 1, 1.0232 )
 enabled = true
 exclude_parent = false
-cast_to = Vector2( 0, 50 )
-collision_mask = 1
-_sections_unfolded = [ "Transform" ]
+collide_with_areas = true
 
-[node name="ray_above" type="RayCast2D" parent="." index="4"]
-
+[node name="ray_above" type="RayCast2D" parent="."]
 position = Vector2( 20.5784, -138.474 )
 rotation = 3.14159
 scale = Vector2( 1, 0.712107 )
 enabled = true
 exclude_parent = false
-cast_to = Vector2( 0, 50 )
-collision_mask = 1
-_sections_unfolded = [ "Transform" ]
+collide_with_areas = true
 
-[node name="ray_right" type="RayCast2D" parent="." index="5"]
-
+[node name="ray_right" type="RayCast2D" parent="."]
 position = Vector2( 175.819, 4.44331 )
 rotation = 4.71239
 scale = Vector2( 1, 0.935386 )
 enabled = true
 exclude_parent = false
-cast_to = Vector2( 0, 50 )
-collision_mask = 1
-_sections_unfolded = [ "Transform" ]
-
+collide_with_areas = true
 

@@ -13,8 +13,14 @@ func _set_moves():
 	moves = []
 	var current = tile
 	if !is_nil(current.above):
+		if is_nil(current.above.piece):
 			moves.append(current.above)
 			current = current.above
+		if !is_nil(current.right):
+			if !is_nil(current.right.piece):
+				moves.append(current.right)
+				
+	
 			
 	
 #func _process(delta):
