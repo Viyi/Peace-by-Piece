@@ -12,18 +12,24 @@ func _ready():
 	set_process(true)
 	
 	var pos = Vector2(0,0)
-
+	
+	# Spawns tiles, eventually will be a tile set
+	
 	for y in range(1,8):
 		for x in range(4,11):
 			pos.x = 256 * x
 			pos.y = 256 * y
 			var node = preload("res://scenes/tile.tscn").instance()
 			node.translate(pos)
-			
 			add_child(node)
+	
+	# Sets the pieces that will be used
+	# Need to make this into multiple arrays soon
 	var pieces = ["king","pillow","mattress","p-borg"]
 	pos = Vector2(256,512)
 	var spawn = preload("res://scenes/spawner.tscn")
+	
+	# Generates spawners dynamically based on the array
 	for a in range(pieces.size()):
 		var s = spawn.instance()
 		pos.y += 256

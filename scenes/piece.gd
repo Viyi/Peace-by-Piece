@@ -46,19 +46,22 @@ func _move():
 					if temp_ray[0].filename == "res://scenes/tile.tscn":
 						# Make a temp tile to compare to the tiles we have in the moves array
 						var temp_tile = temp_ray[0]
-						if is_nil(tile) or moves.has(temp_tile):
-							if !is_nil(tile):
-								tile.piece = null
-								if tile != temp_tile:
-									_unshow_movement()
-									selected = false
-							get_parent()._change_turns()
-							print("tile set")
-							tile = temp_tile
-							
-							if !is_nil(tile.piece):
-								_take()
-							tile.piece = self
+						
+						# Makes sure not taking an ally piece
+						if !(!is_nil(temp_tile.piece) and temp_tile.piece.team == team):
+							if is_nil(tile) or moves.has(temp_tile):
+								if !is_nil(tile):
+									tile.piece = null
+									if tile != temp_tile:
+										_unshow_movement()
+										selected = false
+								get_parent()._change_turns()
+								
+								tile = temp_tile
+								
+								if !is_nil(tile.piece):
+									_take()
+								tile.piece = self
 						# Set position to the tile, unhighlight the tiles, and reset the moves array
 						position = tile.position
 						

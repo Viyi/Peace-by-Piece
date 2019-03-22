@@ -10,6 +10,10 @@ func _ready():
 	pass
 
 func _set_moves():
+	
+	# Yes this looks bad. 
+	# It is.
+	# Adds knight movement
 	moves = []
 	var current = tile
 	if !is_nil(current.above):
@@ -20,6 +24,7 @@ func _set_moves():
 				moves.append(current.right)
 			if !is_nil(current.left):
 				moves.append(current.left)
+				
 	current = tile
 	if !is_nil(current.below):
 		current = current.below
