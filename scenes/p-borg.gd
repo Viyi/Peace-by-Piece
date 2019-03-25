@@ -7,6 +7,8 @@ extends "res://scenes/piece.gd"
 func _ready():
 	# Called when the node is added to the scene for the first time.
 	# Initialization here
+	points = 5
+	cost = 4
 	pass
 
 func _set_moves():

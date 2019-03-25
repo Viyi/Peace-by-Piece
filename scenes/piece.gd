@@ -9,6 +9,9 @@ var tile
 var team = 0
 var moves = []
 var attacks = []
+var points
+var cost
+
 func _ready():
 	# Called when the node is added to the scene for the first time.
 	# Initialization here
@@ -107,8 +110,12 @@ func _set_moves():
 			moves.append(tile.right)
 
 func _take():
-	tile.piece.free()
 	#TODO Increment points for team
+	get_parent().points[team] += tile.piece.points
+	print(get_parent().points)
+	
+	
+	tile.piece.free()
 	tile.piece = self
 		
 			
