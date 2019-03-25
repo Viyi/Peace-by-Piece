@@ -12,13 +12,27 @@ func _ready():
 func _set_moves():
 	moves = []
 	var current = tile
-	if !is_nil(current.above):
-		if is_nil(current.above.piece):
-			moves.append(current.above)
-			current = current.above
-		if !is_nil(current.right):
-			if !is_nil(current.right.piece):
-				moves.append(current.right)
+	
+	if team == 1:
+		
+		if !is_nil(current.above):
+			if is_nil(current.above.piece):
+				moves.append(current.above)
+				current = current.above
+				
+	if team == 2:
+		
+		if !is_nil(current.below):
+			if is_nil(current.below.piece):
+				moves.append(current.below)
+				current = current.below
+				
+	if !is_nil(current.right):
+		if !is_nil(current.right.piece):
+			moves.append(current.right)
+	if !is_nil(current.left):
+		if !is_nil(current.left.piece):
+			moves.append(current.left)
 				
 	
 			

@@ -18,6 +18,8 @@ func _ready():
 func _process(delta):
 	if get_parent().turn == team:
 		_move()
+	
+	targeted(tile)
 
 func _move():
 		
@@ -110,15 +112,39 @@ func _take():
 	tile.piece = self
 		
 			
-		
-		
-			
-		
+func targeted(var t):
+	var current = t
+	if is_nil(t):
+		return false
 	
+	while !is_nil(current.above):
+			current = current.above
+			
+	
+	while !is_nil(current.left):
+			current = current.left
+			
+	
+	
+	
+	var temp_current = current
+	while !is_nil(current.right):
+		
+		while !is_nil(temp_current.below):
+			# temp_current._highlight()
+			if !is_nil(temp_current.piece) and temp_current.piece.team != team:
+				if temp_current.piece.moves.has(tile):
+					print("woot")
+					return true
+			temp_current = temp_current.below
+		current = current.right
+		temp_current = current
+	
+	return false
 	
 
-func get_name():
-	return type
+# func get_name():
+	
 		
 # This checks if nil.
 func is_nil(var v):
