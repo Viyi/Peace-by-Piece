@@ -1,5 +1,7 @@
 extends "res://scenes/piece.gd"
 
+
+
 # class member variables go here, for example:
 # var a = 2
 # var b = "textvar"
@@ -7,6 +9,8 @@ extends "res://scenes/piece.gd"
 func _ready():
 	# Called when the node is added to the scene for the first time.
 	# Initialization here
+	points = 0
+	cost = 0
 	pass
 
 #func _process(delta):
