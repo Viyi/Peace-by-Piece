@@ -52,6 +52,7 @@ func _set_piece(var name):
 		"p-borg":
 			get_node("Sprite").set_texture(load("res://sprites/" + str(team) + "/pillowborg.png"))
 			obj_piece = p_borg
+	
 
 func _detect():
 	
@@ -68,6 +69,8 @@ func _detect():
 		
 		# Create new piece and set the sprite to the spawners sprite
 		chase.get_node("Sprite").set_texture(load($Sprite.texture.resource_path))
+		get_parent().points[team] -= chase.cost
+		print(get_parent().points)
 		
 
 

@@ -7,6 +7,7 @@ var turn = 2
 # loading tiles for deployment
 
 var teams = 2
+var points = []
 
 func _ready():
 	set_process(true)
@@ -37,10 +38,15 @@ func _ready():
 		add_child(s)
 		s._set_piece(pieces[a])
 	
+	#initialilzes the points counter array
+	for i in range(teams+1):
+		points.append(15)
+		
+	
 	# get_node(".").add_child(tile)
 func _change_turns():
 	turn += 1
-	
+
 	if turn > teams:
 		turn = 1
 	

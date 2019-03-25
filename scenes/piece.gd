@@ -108,8 +108,12 @@ func _set_moves():
 			moves.append(tile.right)
 
 func _take():
-	tile.piece.free()
 	#TODO Increment points for team
+	get_parent().points[team] += tile.piece.points
+	print(get_parent().points)
+	
+	
+	tile.piece.free()
 	tile.piece = self
 		
 			
