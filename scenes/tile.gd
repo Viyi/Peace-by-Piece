@@ -10,7 +10,7 @@ var above
 var below
 var left
 var right
-
+var team = 0
 # stores the piece it currently has
 var piece
 

@@ -11,6 +11,8 @@ var moves = []
 var attacks = []
 var points
 var cost
+var moves_set = false
+var unshown = true
 
 func _ready():
 	# Called when the node is added to the scene for the first time.
@@ -21,81 +23,111 @@ func _ready():
 func _process(delta):
 	if get_parent().turn == team:
 		_move()
-	
-	targeted(tile)
+	else:
+		moves_set = false
 
 func _move():
-		
-		# If mouse is just clicked and it's inside the piece then we start to move it
 		if mouse_inside and Input.is_action_just_pressed("ui_left_click"):
 			selected = true
 			placed = false
 			z_index = 2
-			if !is_nil(tile):
-				_set_moves()
-				
 		
-		# Now that we are moving the piece we set the position to our mouse and wait until release
 		if !placed:
-			position = get_global_mouse_position()
+			picked_up()
 			
-			# Now the mouse is released and the magic starts
-			if !Input.is_action_pressed("ui_left_click"):
+		movement_control()
+		highlight_control()
+		
+func movement_control():
+	if !is_nil(tile) and !moves_set:
+		
+		_set_moves()
+		limited_movement()
+		
+		
+func picked_up():
+	if Input.is_action_just_released("ui_left_click"):
 				placed = true
-				
-				# Create an array of all the objects you are touching
-				var temp_ray = get_overlapping_areas()
-
-				if temp_ray.size() > 0:
-					# Check to make sure you're touching a tile object
-					if temp_ray[0].filename == "res://scenes/tile.tscn":
-						# Make a temp tile to compare to the tiles we have in the moves array
-						var temp_tile = temp_ray[0]
-						
-						# Makes sure not taking an ally piece
-						if !(!is_nil(temp_tile.piece) and temp_tile.piece.team == team):
-							if is_nil(tile) or moves.has(temp_tile):
-								if !is_nil(tile):
-									tile.piece = null
-									if tile != temp_tile:
-										_unshow_movement()
-										selected = false
-								get_parent()._change_turns()
-								
-								tile = temp_tile
-								
-								if !is_nil(tile.piece):
-									_take()
-								tile.piece = self
-						# Set position to the tile, unhighlight the tiles, and reset the moves array
-						position = tile.position
-						
-						z_index = 0
-						
-		# This is basically used to show the movement of the piece without holding click
-		if selected:
-			if !is_nil(tile):
-				_show_movement()
-			# Pretty simple, if you click somewhere else it deselects the tile
-			#TODO Add it so you can click on a highlighted tile to move the piece
-			if !mouse_inside and Input.is_action_just_pressed("ui_left_click"):
 				selected = false
-				_unshow_movement()
+				snap_to_piece()
+				z_index = 0
+				return
 				
+	position = get_global_mouse_position()
+
+func snap_to_piece():
+	var temp_ray = get_overlapping_areas()
+	
+	if temp_ray.size() > 0 and temp_ray[0].filename == "res://scenes/tile.tscn":
+		var temp_tile = temp_ray[0]
+		
+		if tile == temp_tile:
+			selected = true
+			
+		elif get_parent().pregame:
+			if is_nil(temp_tile.piece) and temp_tile.team == team and is_nil(tile):
+				if !is_nil(tile):
+					tile.piece = null
+				tile = temp_tile
+				tile.piece = self
+				get_parent()._change_turns()
+			
+		elif is_nil(temp_tile.piece) and (is_nil(tile) or moves.has(temp_tile)):
+			if !is_nil(tile):
+				tile.piece = null
+			tile = temp_tile
+			tile.piece = self
+			get_parent()._change_turns()
+		
+		elif !is_nil(temp_tile.piece) and temp_tile.piece.team != team and attacks.has(temp_tile):
+			tile.piece = null
+			tile = temp_tile
+			_take()
+			get_parent()._change_turns()
+			
+		
+	if !is_nil(tile):	
+		position = tile.position
+		
+func highlight_control():
+	if !mouse_inside and Input.is_action_just_pressed("ui_left_click"):
+		selected = false
+		_unshow_movement()
+		return
+	elif placed and !selected:
+		if !unshown:
+			_unshow_movement()
+		
+	if selected:
+		unshown = false
+		_show_movement()
+
 # Goes through the move array and highlights the tiles
 func _show_movement():
+	
 	if moves.size() > 0:
 		for a in range(moves.size()):
 				moves[a]._highlight()
+	if attacks.size() > 0:
+		for a in range(attacks.size()):
+			if !is_nil(attacks[a].piece) && attacks[a].piece.team != team:
+				attacks[a]._highlight()
 				
 # Opposite of _show_movement()
 func _unshow_movement():
+	print("Aight Team")
+	unshown = true
 	if moves.size() > 0:
 		for a in range(moves.size()):
 				moves[a]._unhighlight()
+	if attacks.size() > 0:
+		for a in range(attacks.size()):
+			if !is_nil(attacks[a].piece) && attacks[a].piece.team != team:
+				attacks[a]._unhighlight()
 			
 # This defines where the piece can move by adding tiles to the moves array
 # This should be the only thing we change in the children of this node
+# If you give it true it will unrestrict bounds and not stop at pieces
 func _set_moves():
 	moves = []
 	print("Setting Moves")
@@ -108,46 +140,64 @@ func _set_moves():
 			moves.append(tile.left)
 	if !is_nil(tile.right):
 			moves.append(tile.right)
+	
+	attacks = moves
+	moves_set = true
+
+func limited_movement():
+	pass
 
 func _take():
-	#TODO Increment points for team
+	if is_nil(tile.piece) or tile.piece == self:
+		return
 	get_parent().points[team] += tile.piece.points
 	print(get_parent().points)
-	
 	
 	tile.piece.free()
 	tile.piece = self
 		
-			
+func blocked(var t):
+	if is_nil(t):
+		return -1
+	# returns 1 if a friendly unit 2 if an enemy unit is on the spot
+	if !is_nil(t.piece):
+		if t.piece.team == team:
+			return 1
+		
+		return 2
+	
+	return 0
+
 func targeted(var t):
 	var current = t
+	
 	if is_nil(t):
-		return false
+		return -1
 	
 	while !is_nil(current.above):
 			current = current.above
 			
-	
 	while !is_nil(current.left):
 			current = current.left
 			
-	
-	
-	
 	var temp_current = current
-	while !is_nil(current.right):
+	while !is_nil(current):
 		
-		while !is_nil(temp_current.below):
-			# temp_current._highlight()
+		# If the tile is target it returns 1
+		while !is_nil(temp_current):
 			if !is_nil(temp_current.piece) and temp_current.piece.team != team:
-				if temp_current.piece.moves.has(tile):
-					print("woot")
-					return true
+				tile.piece = null
+				temp_current.piece._set_moves()
+				if temp_current.piece.attacks.has(t):
+					temp_current.piece._set_moves()
+					tile.piece = self
+					return 1
+				temp_current.piece._set_moves()
 			temp_current = temp_current.below
 		current = current.right
 		temp_current = current
-	
-	return false
+	# Returns 0 if not targeted at all
+	return 0
 	
 
 # func get_name():

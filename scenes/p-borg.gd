@@ -13,34 +13,37 @@ func _ready():
 
 func _set_moves():
 	moves = []
-	print("Setting Moves")
+	# print("Setting Moves")
 	var current = tile
 	while !is_nil(current.above):
 			moves.append(current.above)
 			current = current.above
-			if(!is_nil(current.piece)):
+			if !is_nil(current.piece):
 				break
 			
 	current = tile
 	while !is_nil(current.below):
 			moves.append(current.below)
 			current = current.below
-			if(!is_nil(current.piece)):
+			if !is_nil(current.piece):
 				break
 			
 	current = tile
 	while !is_nil(current.left):
 			moves.append(current.left)
 			current = current.left
-			if(!is_nil(current.piece)):
+			if !is_nil(current.piece):
 				break
 			
 	current = tile
 	while !is_nil(current.right):
 			moves.append(current.right)
 			current = current.right
-			if(!is_nil(current.piece)):
+			if !is_nil(current.piece):
 				break
+	print(str(moves))
+	moves_set = true
+	attacks = moves
 #func _process(delta):
 #	# Called every frame. Delta is time since last frame.
 #	# Update game logic here.

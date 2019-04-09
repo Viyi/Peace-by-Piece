@@ -57,6 +57,7 @@ func _set_moves():
 			if !is_nil(current.below):
 				moves.append(current.below)
 			
+	attacks = moves
 			
 	
 #func _process(delta):

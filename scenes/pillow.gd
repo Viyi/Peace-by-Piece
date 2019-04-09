@@ -13,6 +13,7 @@ func _ready():
 
 func _set_moves():
 	moves = []
+	attacks = []
 	var current = tile
 	
 	if team == 1:
@@ -30,11 +31,11 @@ func _set_moves():
 				current = current.below
 				
 	if !is_nil(current.right):
-		if !is_nil(current.right.piece):
-			moves.append(current.right)
+		if !is_nil(current.right):
+			attacks.append(current.right)
 	if !is_nil(current.left):
-		if !is_nil(current.left.piece):
-			moves.append(current.left)
+		if !is_nil(current.left):
+			attacks.append(current.left)
 				
 	
 			

@@ -65,11 +65,16 @@ func _detect():
 		two_lines.x += 256
 		chase.translate(two_lines)
 		chase.team = get_parent()._get_player()
+	
 		get_parent().add_child(chase)
 		
 		# Create new piece and set the sprite to the spawners sprite
 		chase.get_node("Sprite").set_texture(load($Sprite.texture.resource_path))
-		get_parent().points[team] -= chase.cost
+		
+		if get_parent().points[team] - chase.cost < 0:
+			chase.free()
+		else:
+			get_parent().points[team] -= chase.cost
 		print(get_parent().points)
 		
 
