@@ -1,0 +1,14 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://scenes/main_font.tres" type="DynamicFont" id=1]
+[ext_resource path="res://scenes/Points.gd" type="Script" id=2]
+
+[node name="Points" type="Label"]
+margin_left = 27.1395
+margin_top = 19.3853
+margin_right = 67.1395
+margin_bottom = 43.3853
+custom_fonts/font = ExtResource( 1 )
+text = "Penis"
+script = ExtResource( 2 )
+

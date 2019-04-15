@@ -9,14 +9,14 @@ var turn = 2
 var teams = 2
 var points = []
 var pregame = true
-var skipped = 0
+var skips = [true,false,false]
 func _ready():
 	set_process(true)
 	
 	var pos = Vector2(0,0)
 	
 	# Spawns tiles, eventually will be a tile set
-	
+	var points_label = preload("res://scenes/points_display.tscn")
 	for y in range(1,8):
 		for x in range(4,11):
 			pos.x = 256 * x
@@ -36,7 +36,7 @@ func _ready():
 	var pieces = ["king","pillow","mattress","p-borg"]
 	pos = Vector2(256,512)
 	var spawn = preload("res://scenes/spawner.tscn")
-
+	
 	# Generates spawners dynamically based on the array
 	for a in range(pieces.size()):
 		var s = spawn.instance()
@@ -44,6 +44,11 @@ func _ready():
 		s.translate(pos)
 		add_child(s)
 		s._set_piece(pieces[a])
+		
+	var s = preload("res://scenes/Skip Button.tscn").instance()
+	pos.y += 256
+	s.translate(pos)
+	add_child(s)
 	
 	#initialilzes the points counter array
 	for i in range(teams+1):
@@ -59,16 +64,18 @@ func _change_turns():
 	
 		
 func skipped():
-	if skipped > teams:
-		pregame = false
-	else:
-		skipped += 1
+	skips[turn] = true
+	for a in skips:
+		if !a:
+			return
+	pregame = false
+	
+	
 
 func _get_player():
 	return turn
 
 
-#func _process(delta):
-#	# Called every frame. Delta is time since last frame.
-#	# Update game logic here.
-#	pass
+func _process(delta):
+	if pregame and skips[turn]:
+		_change_turns()

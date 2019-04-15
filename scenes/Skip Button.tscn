@@ -4,17 +4,17 @@
 [ext_resource path="res://sprites/1/skip.png" type="Texture" id=2]
 
 [sub_resource type="RectangleShape2D" id=1]
-extents = Vector2( 110, 109.245 )
+extents = Vector2( 89.951, 88.757 )
 
 [node name="Skip Button" type="Area2D"]
 script = ExtResource( 1 )
 
 [node name="Sprite" type="Sprite" parent="."]
-position = Vector2( 186.78, 89.2447 )
+position = Vector2( -0.220001, 0.244698 )
 texture = ExtResource( 2 )
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-position = Vector2( 188.049, 88.757 )
+position = Vector2( -1.951, 1.757 )
 shape = SubResource( 1 )
 
 [connection signal="mouse_entered" from="." to="." method="_on_Skip_Button_mouse_entered"]
