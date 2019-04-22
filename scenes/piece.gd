@@ -13,7 +13,7 @@ var points
 var cost
 var moves_set = false
 var unshown = true
-
+var special_snowflake = false
 func _ready():
 	# Called when the node is added to the scene for the first time.
 	# Initialization here
@@ -23,11 +23,12 @@ func _ready():
 func _process(delta):
 	if get_parent().turn == team:
 		_move()
+		next_to_king(tile)
 	else:
 		moves_set = false
 
 func _move():
-		if mouse_inside and Input.is_action_just_pressed("ui_left_click"):
+		if mouse_inside and Input.is_action_just_pressed("ui_left_click") and (!get_parent().pregame or (!get_parent().spawned or special_snowflake)):
 			selected = true
 			placed = false
 			z_index = 2
@@ -39,8 +40,8 @@ func _move():
 		highlight_control()
 		
 func movement_control():
-	if !is_nil(tile) and !moves_set:
-		
+	if !is_nil(tile) and !moves_set and selected:
+		_unshow_movement()
 		_set_moves()
 		limited_movement()
 		
@@ -70,16 +71,20 @@ func snap_to_piece():
 					tile.piece = null
 				tile = temp_tile
 				tile.piece = self
+				special_snowflake = false
 				get_parent()._change_turns()
-			
-		elif is_nil(temp_tile.piece) and (is_nil(tile) or moves.has(temp_tile)):
+		elif is_nil(tile) and next_to_king(temp_tile) and is_nil(temp_tile.piece):
+			tile = temp_tile
+			tile.piece = self
+			get_parent()._change_turns()
+		elif !is_nil(tile) and is_nil(temp_tile.piece) and (is_nil(tile) or moves.has(temp_tile)):
 			if !is_nil(tile):
 				tile.piece = null
 			tile = temp_tile
 			tile.piece = self
 			get_parent()._change_turns()
 		
-		elif !is_nil(temp_tile.piece) and temp_tile.piece.team != team and attacks.has(temp_tile):
+		elif !is_nil(tile) and !is_nil(temp_tile.piece) and temp_tile.piece.team != team and attacks.has(temp_tile):
 			tile.piece = null
 			tile = temp_tile
 			_take()
@@ -90,7 +95,7 @@ func snap_to_piece():
 		position = tile.position
 		
 func highlight_control():
-	if !mouse_inside and Input.is_action_just_pressed("ui_left_click"):
+	if !mouse_inside and Input.is_action_just_pressed("ui_left_click") and selected == true:
 		selected = false
 		_unshow_movement()
 		return
@@ -115,7 +120,7 @@ func _show_movement():
 				
 # Opposite of _show_movement()
 func _unshow_movement():
-	print("Aight Team")
+	
 	unshown = true
 	if moves.size() > 0:
 		for a in range(moves.size()):
@@ -129,8 +134,9 @@ func _unshow_movement():
 # This should be the only thing we change in the children of this node
 # If you give it true it will unrestrict bounds and not stop at pieces
 func _set_moves():
+	_unshow_movement()
 	moves = []
-	print("Setting Moves")
+	
 	
 	if !is_nil(tile.above):
 			moves.append(tile.above)
@@ -151,7 +157,7 @@ func _take():
 	if is_nil(tile.piece) or tile.piece == self:
 		return
 	get_parent().points[team] += tile.piece.points
-	print(get_parent().points)
+	
 	
 	tile.piece.free()
 	tile.piece = self
@@ -189,9 +195,10 @@ func targeted(var t):
 				tile.piece = null
 				temp_current.piece._set_moves()
 				if temp_current.piece.attacks.has(t):
-					temp_current.piece._set_moves()
 					tile.piece = self
+					temp_current.piece._set_moves()
 					return 1
+				tile.piece = self
 				temp_current.piece._set_moves()
 			temp_current = temp_current.below
 		current = current.right
@@ -199,6 +206,18 @@ func targeted(var t):
 	# Returns 0 if not targeted at all
 	return 0
 	
+func next_to_king(var t):
+	if !is_nil(t):
+		if !is_nil(t.left) and !is_nil(t.left.piece) and t.left.piece.filename == "res://scenes/king_cuddle_bear.tscn" and t.left.piece.team == team:
+			return true
+		if !is_nil(t.right) and !is_nil(t.right.piece) and t.right.piece.filename == "res://scenes/king_cuddle_bear.tscn" and t.right.piece.team == team:
+			return true
+		if !is_nil(t.below) and !is_nil(t.below.piece) and t.below.piece.filename == "res://scenes/king_cuddle_bear.tscn" and t.below.piece.team == team:
+			return true
+		if !is_nil(t.above) and !is_nil(t.above.piece) and t.above.piece.filename == "res://scenes/king_cuddle_bear.tscn" and t.above.piece.team == team:
+			return true
+	
+	return false
 
 # func get_name():
 	

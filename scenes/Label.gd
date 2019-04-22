@@ -10,4 +10,4 @@ func _ready():
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
-	text = str(get_parent().points[get_parent().turn])
+	text = str(get_parent().get_parent().points[get_parent().get_parent().turn])

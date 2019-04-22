@@ -16,6 +16,7 @@ func _set_moves():
 	# Yes this looks bad. 
 	# It is.
 	# Adds knight movement
+	
 	moves = []
 	var current = tile
 	if !is_nil(current.above):

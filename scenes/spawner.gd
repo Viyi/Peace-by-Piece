@@ -8,22 +8,26 @@ onready var king = preload("res://scenes/king_cuddle_bear.tscn")
 onready var mattress = preload("res://scenes/mattress.tscn")
 onready var pillow = preload("res://scenes/pillow.tscn")
 onready var p_borg = preload("res://scenes/p-borg.tscn")
+onready var lord_of_slumber = preload("res://scenes/lordofslumber.tscn")
 
+var cost_set = false
 var mouse_inside = false
 var piece = ""
 var obj_piece
 var team = 0
+var cost = 0
+var setup = false
 
 
 
 func _ready():
 	print()
+	
 	pass
 
 func _process(delta):
 	# Damnit Chase. 
 	_set_piece(piece)
-		
 	_detect()
 	
 	# Woo Set Piece
@@ -52,12 +56,29 @@ func _set_piece(var name):
 		"p-borg":
 			get_node("Sprite").set_texture(load("res://sprites/" + str(team) + "/pillowborg.png"))
 			obj_piece = p_borg
+		"lord_of_slumber":
+			get_node("Sprite").set_texture(load("res://sprites/" + str(team) + "/lordofslumber.png"))
+			obj_piece = lord_of_slumber
+			
+	
+	
+	var chase = obj_piece.instance()
+	add_child(chase)
+	if get_parent().pregame:
+		cost = chase.points
+	else:
+		cost = chase.cost
+	
+	chase.free()
+	cost_set = true
+	
+	get_node("Panel/Label").text = str(cost)
 	
 
 func _detect():
 	
 	# Detects if the spawner has been clicked
-	if mouse_inside and Input.is_action_just_pressed("ui_left_click"):
+	if mouse_inside and Input.is_action_just_pressed("ui_left_click") and !get_parent().spawned:
 		
 		# Create a new piece based on the switch case
 		var two_lines = position
@@ -65,16 +86,23 @@ func _detect():
 		two_lines.x += 256
 		chase.translate(two_lines)
 		chase.team = get_parent()._get_player()
-	
-		get_parent().add_child(chase)
+		chase.special_snowflake = true
 		
+		get_parent().add_child(chase)
+		get_parent().spawned = true
 		# Create new piece and set the sprite to the spawners sprite
 		chase.get_node("Sprite").set_texture(load($Sprite.texture.resource_path))
 		
-		if get_parent().points[team] - chase.cost < 0:
+		if !get_parent().pregame:
+			setup = true
+			cost = chase.cost
+		
+		
+			
+		if get_parent().points[team] - cost < 0:
 			chase.free()
 		else:
-			get_parent().points[team] -= chase.cost
+			get_parent().points[team] -= cost
 		print(get_parent().points)
 		
 
@@ -85,3 +113,6 @@ func _on_Spawner_mouse_entered():
 
 func _on_Spawner_mouse_exited():
 	mouse_inside = false
+	
+func is_nil(var v):
+	return typeof(v) == 0

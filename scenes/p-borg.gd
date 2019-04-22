@@ -12,6 +12,7 @@ func _ready():
 	pass
 
 func _set_moves():
+	_unshow_movement()
 	moves = []
 	# print("Setting Moves")
 	var current = tile
@@ -41,7 +42,7 @@ func _set_moves():
 			current = current.right
 			if !is_nil(current.piece):
 				break
-	print(str(moves))
+
 	moves_set = true
 	attacks = moves
 #func _process(delta):

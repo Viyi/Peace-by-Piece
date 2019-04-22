@@ -13,7 +13,7 @@ func _ready():
 
 
 func _process(delta):
-	if entered and Input.is_action_just_pressed("ui_left_click"):
+	if entered and Input.is_action_just_pressed("ui_left_click") and !get_parent().spawned and get_parent().pregame:
 		get_parent().skipped()
 	
 	if get_parent().turn != team:
